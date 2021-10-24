@@ -1,6 +1,6 @@
 # Integration-Architectures Course in 2021/2022 at Bonn-Rhein-Sieg Univesity of Applied Science 
 
-To use the App please consider the following given steps
+To use the App please consider following the given steps
 
 1) Run App.java to start the App
 2) Follow instractions in the command line
