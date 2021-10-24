@@ -1,0 +1,39 @@
+@startuml Assignment_No_1b
+
+left to right direction
+
+actor SeniorSalesman
+actor CEO
+actor Assistant
+actor HR 
+actor IT_Admin 
+database mongoDB
+package OrangeHRM
+package OpenCRX
+file excelSheet
+folder ringBinder
+entity PerformanceMeeting 
+entity office
+
+Assistant <-- OrangeHRM : copy values
+Assistant <-- OpenCRX : copy values
+Assistant <-- IT_Admin : gets performance records
+Assistant --> IT_Admin : requests performance records
+IT_Admin <- mongoDB : fetch and copy records
+CEO -down-> excelSheet : checks and fills bonus values manually
+HR --> IT_Admin : sends actual values of social performance 
+IT_Admin ---> mongoDB : inserts social performance values 
+CEO -> PerformanceMeeting : takes part in, discusses reports
+HR -> PerformanceMeeting : takes part in, discusses reports
+HR -> PerformanceMeeting : prints out performance reports
+Assistant <-- PerformanceMeeting : takes reports after performance meetings
+excelSheet -> PerformanceMeeting : takes part in
+Assistant -down-> excelSheet : fills sheet with data for each salesman
+Assistant --> CEO : gives him printed versions of the reports
+Assistant -down-> excelSheet : signs after review
+excelSheet -> ringBinder : are put in a ringbinder
+ringBinder -up-office : ringBinder is archived in an office
+Assistant --> OrangeHRM : enriches the employee record with calculated bonuses
+Assistant --> SeniorSalesman : submits the remarks
+
+@enduml
