@@ -24,7 +24,7 @@ public class HRManager implements ManagePersonal {
         return mongo.findSalesMan(sid);
     }
 
-    //Do not understand what the method should return
+    //Do not understand what the method actually should do
     @Override
     public List<SalesMan> querySalesMan(String attribute, String key) {
         return null;
@@ -33,5 +33,26 @@ public class HRManager implements ManagePersonal {
     @Override
     public EvaluationRecord readEvaluationRecords(int sid) throws InvalidInputException{
         return mongo.findEvaluationRecord(sid);
+    }
+
+    @Override
+    public void updateSalesMan(SalesMan record) throws InvalidInputException {
+        mongo.updateSalesMan(record);
+    }
+
+    @Override
+    public void updateEvaluationRecord(EvaluationRecord record, int sid) throws InvalidInputException {
+        record.setSid(sid);
+        mongo.updateEvaluationRecord(record);
+    }
+
+    @Override
+    public void deleteSalesMan(int sid) throws InvalidInputException {
+        mongo.deleteSalesMan(sid);
+    }
+
+    @Override
+    public void deleteEvaluationRecord(int sid) throws InvalidInputException {
+        mongo.deleteEvaluationRecord(sid);
     }
 }

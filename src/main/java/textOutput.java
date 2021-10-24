@@ -12,6 +12,14 @@ public class textOutput {
                 "(1) Create a new Salesman\n" +
                 "(2) Add a performance record to a salesman\n" +
                 "(3) Read the general Information of a salesman\n" +
-                "(4) Read the evaluation records of a salesman\n");
+                "(4) Read the evaluation records of a salesman\n" +
+                "(5) Delete a SalesMan\n" +
+                "(6) Delete a Evaluation Record\n" +
+                "(7) Update the data of a Salesman\n" +
+                "(8) Update the data of a evaluation record\n");
+    }
+    //Thank you text
+    public static void thankYou() {
+        System.out.println("Thank you for choosing ManagePersonal App\nGood Bye");
     }
 }

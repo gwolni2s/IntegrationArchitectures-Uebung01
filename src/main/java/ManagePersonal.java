@@ -8,8 +8,17 @@ public interface ManagePersonal {
 
     public SalesMan readSalesMan( int sid ) throws InvalidInputException;
 
+    //Do not understand what the method actually should do
     public List<SalesMan> querySalesMan(String attribute , String key );
 
     public EvaluationRecord readEvaluationRecords( int sid ) throws InvalidInputException;
+
+    public void updateSalesMan(SalesMan record) throws InvalidInputException;
+
+    public void updateEvaluationRecord(EvaluationRecord record, int sid) throws InvalidInputException;
+
+    public void deleteSalesMan(int sid) throws InvalidInputException;
+
+    public void deleteEvaluationRecord(int sid) throws InvalidInputException;
 
 }
