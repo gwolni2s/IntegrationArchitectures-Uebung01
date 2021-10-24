@@ -33,7 +33,7 @@ public class MongoWrapper {
          *              everything except the example data is deleted,
          *              how can the data created external using the app still be saved ?
          */
-        //Clean database (Onl two collections yet)
+        //Clean database (Only two collections yet)
         salesmen.drop();
         evaluationRecords.drop();
 
