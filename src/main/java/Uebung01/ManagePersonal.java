@@ -1,10 +1,16 @@
+package Uebung01;
+
+import Uebung01.EvaluationRecord;
+import Uebung01.InvalidInputException;
+import Uebung01.SalesMan;
+
 import java.util.List;
 
 public interface ManagePersonal {
 
     public void createSalesMan( SalesMan record ) throws InvalidInputException;
 
-    public void addPerformanceRecord( EvaluationRecord record , int sid );
+    public void addPerformanceRecord(EvaluationRecord record , int sid );
 
     public SalesMan readSalesMan( int sid ) throws InvalidInputException;
 

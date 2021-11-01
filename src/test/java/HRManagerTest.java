@@ -1,8 +1,6 @@
-import com.mongodb.ExplainVerbosity;
+import Uebung01.*;
 import org.bson.Document;
 import org.junit.jupiter.api.*;
-
-import javax.print.Doc;
 
 import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,12 +11,16 @@ public class HRManagerTest {
     static SalesMan salesman2;
     static SalesMan salesman3;
     static SalesMan salesman4;
+    static SalesMan salesman5;
+    static SalesMan salesman6;
     static SalesMan supdate1;
     static SalesMan supdate2;
     static EvaluationRecord record1;
     static EvaluationRecord record2;
     static EvaluationRecord record3;
     static EvaluationRecord record4;
+    static EvaluationRecord record5;
+    static EvaluationRecord record6;
     static EvaluationRecord rupdate1;
     static EvaluationRecord rupdate2;
     static HRManager manager;
@@ -41,6 +43,10 @@ public class HRManagerTest {
         manager = null;
         mongoDatabase = null;
     }
+    @AfterAll
+    public static void closeDatabase() {
+        manager.closeConnection();
+    }
 
     @BeforeAll
     public static void createConnection() {
@@ -50,13 +56,22 @@ public class HRManagerTest {
 
     @BeforeAll
     public static void setUp() {
+        //init()
+        //Create salesman
+        salesman5 = new SalesMan(000001, "John", "Smith");
+        salesman6 = new SalesMan(000002, "Louisa", "Widdmann");
+
+        //Create evaluation records
+        record5 = new EvaluationRecord(000001, 2021, "HooverGo", "Telekom AG", "excellent", 20, 4, 3, 2, 3, 3, 3, 4, 100, 30, "What's wrong?");
+        record6 = new EvaluationRecord(000002, 2021, "HooverClean", "Germania GmbH", "good", 15, 4, 4, 3, 4, 4, 3, 3, 150, 90, "Good Job");
+
         //Create salesman
         salesman1 = new SalesMan(000003, "Mario", "Italiano");
         salesman2 = new SalesMan(000004, "Luigi", "Italiano");
         //Create evaluation records
         record1 = new EvaluationRecord(000003, 2021, "tax course", "american bank", "good", 30, 4, 2, 3, 4, 5, 4, 5, 120, 50, "Can I help you?");
         record2 = new EvaluationRecord(000004, 2021, "Real estate course", "dhl", "bad", 20, 4, 3, 4, 3, 1, 2, 4, 100, 60, "You Good?");
-        //Create Update SalesMan
+        //Create Update Uebung01.SalesMan
         supdate1 = new SalesMan(000003, "Pablo", "Escobar");
         supdate2 = new SalesMan(000004, "Pablo", "Picasso");
         //Create update records
@@ -71,8 +86,12 @@ public class HRManagerTest {
         manager.createSalesMan(salesman2);
         manager.addPerformanceRecord(record1, 000003);
         manager.addPerformanceRecord(record2, 000004);
+        manager.createSalesMan(salesman5);
+        manager.createSalesMan(salesman6);
+        manager.addPerformanceRecord(record5, 1);
+        manager.addPerformanceRecord(record6, 2);
     }
-    @DisplayName("Test was successful if the SalesMan were created and inserted correctly into the database")
+    @DisplayName("Test was successful if the Uebung01.SalesMan were created and inserted correctly into the database")
     @Test
     public void createSalesManTest() throws InvalidInputException {
         Document doc1 = mongoDatabase.salesmen.find(eq("sid", salesman1.getSid())).first();

@@ -1,3 +1,5 @@
+package Uebung01;
+
 import java.util.Scanner;
 
 public class App {
@@ -30,7 +32,7 @@ public class App {
         //Create Scanner to take input from the command line
         Scanner scan = new Scanner(System.in);
 
-        //Welcome and create database connection with HRManager object
+        //Welcome and create database connection with Uebung01.HRManager object
         HRManager manager = new HRManager(new MongoWrapper());
         textOutput.welcome();
 
@@ -40,6 +42,7 @@ public class App {
             switch (scan.nextInt()) {
                 case 0:
                     textOutput.thankYou();
+                    manager.closeConnection();
                     active = false;
                     break;
                 case 1:

@@ -1,3 +1,5 @@
+package Uebung01;
+
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
@@ -8,10 +10,10 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class MongoWrapper {
 
-    MongoClient client;
-    MongoDatabase mongo;
-    MongoCollection<Document> salesmen;
-    MongoCollection<Document> evaluationRecords;
+    public MongoClient client;
+    public MongoDatabase mongo;
+    public MongoCollection<Document> salesmen;
+    public MongoCollection<Document> evaluationRecords;
 
     public MongoWrapper() {
 
@@ -28,31 +30,6 @@ public class MongoWrapper {
     }
 
     public void init() {
-        /**
-         * Question: By dropping all collections at the beginning,
-         *              everything except the example data is deleted,
-         *              how can the data created external using the app still be saved ?
-         */
-        //Clean database (Only two collections yet)
-        salesmen.drop();
-        evaluationRecords.drop();
-
-        //Create salesman
-        SalesMan salesman = new SalesMan(000001, "John", "Smith");
-        SalesMan saleswoman = new SalesMan(000002, "Louisa", "Widdmann");
-
-        //Create evaluation records
-        EvaluationRecord recordOne = new EvaluationRecord(000001, 2021, "HooverGo", "Telekom AG", "excellent", 20, 4, 3, 2, 3, 3, 3, 4, 100, 30, "What's wrong?");
-        EvaluationRecord recordTwo = new EvaluationRecord(000002, 2021, "HooverClean", "Germania GmbH", "good", 15, 4, 4, 3, 4, 4, 3, 3, 150, 90, "Good Job");
-
-        //Insert Salesmen into database
-        salesmen.insertOne(salesman.toDocument());
-        salesmen.insertOne(saleswoman.toDocument());
-
-        //Insert evaluation records into database
-        evaluationRecords.insertOne(recordOne.toDocument());
-        evaluationRecords.insertOne(recordTwo.toDocument());
-
         //print Ausgabe der Verbindung
         System.out.println("Connection to the database was succesfully created.\n-----------------------------------------------------------------------------------");
     }
@@ -61,7 +38,7 @@ public class MongoWrapper {
     public void insertSalesMan(SalesMan salesMan) throws InvalidInputException {
         //check if sid already exists
         Document check = salesmen.find(eq("sid", salesMan.getSid())).first();
-        if(check != null) throw new InvalidInputException("SalesMan with the given SID already exists.");
+        if(check != null) throw new InvalidInputException("Uebung01.SalesMan with the given SID already exists.");
 
         //insert document
         salesmen.insertOne(salesMan.toDocument());
@@ -70,7 +47,7 @@ public class MongoWrapper {
     //method from lecture 19.10.2021
     public SalesMan findSalesMan(int sid) throws InvalidInputException {
         Document salesManDoc = salesmen.find(eq("sid", sid)).first();
-        if(salesManDoc == null) throw new InvalidInputException("SalesMan with the given SID does not exist.");
+        if(salesManDoc == null) throw new InvalidInputException("Uebung01.SalesMan with the given SID does not exist.");
         return new SalesMan(salesManDoc.getInteger("sid"),
                     salesManDoc.getString("firstname"),
                     salesManDoc.getString("lastname"));
@@ -78,15 +55,15 @@ public class MongoWrapper {
     //method similar to findSalesMan
     public void deleteSalesMan(int sid) throws InvalidInputException {
         Document salesManDoc = salesmen.find(eq("sid", sid)).first();
-        if(salesManDoc == null) throw new InvalidInputException("SalesMan with the given SID does not exist");
+        if(salesManDoc == null) throw new InvalidInputException("Uebung01.SalesMan with the given SID does not exist");
         //Delete salesman
         salesmen.deleteOne(eq("sid", sid));
         System.out.println("The Salesman with the given sid: " + sid + " was deleted successfully");
     }
     public void updateSalesMan(SalesMan salesMan) throws InvalidInputException {
         Document check = salesmen.find(eq("sid", salesMan.getSid())).first();
-        if(check == null) throw new InvalidInputException("SalesMan with the given SID does not exist");
-        //Update SalesMan
+        if(check == null) throw new InvalidInputException("Uebung01.SalesMan with the given SID does not exist");
+        //Update Uebung01.SalesMan
         salesmen.updateOne(eq("sid", salesMan.getSid()), eq("$set", salesMan.toDocument()));
     }
     //insert performance record
@@ -124,11 +101,14 @@ public class MongoWrapper {
         evaluationRecords.deleteOne(eq("sid", sid));
         System.out.println("The evaluation record with the sid: " + sid + " was deleted successfully");
     }
-    public void updateEvaluationRecord(EvaluationRecord record) throws InvalidInputException{
+    public void updateEvaluationRecord(EvaluationRecord record) throws InvalidInputException {
         Document check = evaluationRecords.find(eq("sid", record.getSid())).first();
         if(check == null) throw new InvalidInputException("The evaluation record with the given sid does not exist");
         //Update evaluation record
         evaluationRecords.updateOne(eq("sid", record.getSid()), eq("$set", record.toDocument()));
+    }
+    public void closeDatabase() {
+        client.close();
     }
 }
 

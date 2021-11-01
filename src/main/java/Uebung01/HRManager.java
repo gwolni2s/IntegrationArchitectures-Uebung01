@@ -1,3 +1,10 @@
+package Uebung01;
+
+import Uebung01.EvaluationRecord;
+import Uebung01.InvalidInputException;
+import Uebung01.MongoWrapper;
+import Uebung01.SalesMan;
+
 import java.util.List;
 
 public class HRManager implements ManagePersonal {
@@ -54,5 +61,8 @@ public class HRManager implements ManagePersonal {
     @Override
     public void deleteEvaluationRecord(int sid) throws InvalidInputException {
         mongo.deleteEvaluationRecord(sid);
+    }
+    public void closeConnection() {
+        mongo.closeDatabase();
     }
 }

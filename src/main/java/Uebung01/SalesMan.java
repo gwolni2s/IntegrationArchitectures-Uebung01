@@ -1,3 +1,5 @@
+package Uebung01;
+
 import org.bson.Document;
 
 public class SalesMan {
