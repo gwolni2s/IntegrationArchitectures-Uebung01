@@ -1,3 +1,5 @@
+package Uebung01;
+
 import Uebung01.*;
 import org.bson.Document;
 import org.junit.jupiter.api.*;
